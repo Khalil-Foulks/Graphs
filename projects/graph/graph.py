@@ -50,7 +50,7 @@ class Graph:
 
             # check if it exist in the visited set
             if v not in visited:
-                print(v) # visit the node
+                print('bft:', v) # visit the node
 
                 # add to visited set
                 visited.add(v)
@@ -75,25 +75,49 @@ class Graph:
             v = q.pop()
 
             if v not in visited:
-                print(v) # visit the node
+                print('dft:', v) # visit the node
 
                 # add to visited set
                 visited.add(v)     
 
-                # grab each neighbor of current vertix and add it to the top of stack 
+                # grab each neighbor of current vertex and add it to the top of stack 
                 for neighbor in self.get_neighbors(v):
                     q.push(neighbor)           
 
 
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex,visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        q = Stack()
+        
+
+        if visited is None:
+            visited = set()
+    
+        # Init - add starting node to top of stack
+        q.push(starting_vertex)
+
+        while q.size() > 0:
+            # remove from the top of stack
+            v = q.pop()
+
+            if v not in visited:
+                print('dft_re:', v) # visit the node
+
+                # add to visited set
+                visited.add(v)     
+
+                # grab each neighbor of current vertex and add it to the top of stack 
+                for neighbor in self.get_neighbors(v):
+                    # calls function again on neighbors while travesing and keeps track of visted vertices
+                    self.dft_recursive(neighbor, visited)  
+
+
 
     def bfs(self, starting_vertex, destination_vertex):
         """
