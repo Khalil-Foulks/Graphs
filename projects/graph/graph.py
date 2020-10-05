@@ -13,33 +13,78 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        pass  # TODO
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        pass  # TODO
+        # if keys exist in dictionary
+        if v1 in self.vertices and v2 in self.vertices:
+            # add v2 to v1's set
+            self.vertices[v1].add(v2)
+        else:
+            raise IndexError("Vertex does not exist")
 
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Queue()
+        visited = set()
+
+        # init - add starting node to queue
+        q.enqueue(starting_vertex)
+
+        # while queue isnt empty
+        while q.size() > 0:
+            # removed vertex from queue
+            v = q.dequeue()
+
+            # check if it exist in the visited set
+            if v not in visited:
+                print(v) # visit the node
+
+                # add to visited set
+                visited.add(v)
+
+                # grab each neighbor of current vertix and add it to the queue 
+                for neighbor in self.get_neighbors(v):
+                    q.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        q = Stack()
+        visited = set()
+    
+        # Init - add starting node to top of stack
+        q.push(starting_vertex)
+
+        while q.size() > 0:
+            # remove from the top of stack
+            v = q.pop()
+
+            if v not in visited:
+                print(v) # visit the node
+
+                # add to visited set
+                visited.add(v)     
+
+                # grab each neighbor of current vertix and add it to the top of stack 
+                for neighbor in self.get_neighbors(v):
+                    q.push(neighbor)           
+
+
 
     def dft_recursive(self, starting_vertex):
         """
