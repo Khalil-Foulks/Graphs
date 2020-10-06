@@ -93,29 +93,19 @@ class Graph:
 
         This should be done using recursion.
         """
-        q = Stack()
-        
-
         if visited is None:
             visited = set()
     
-        # Init - add starting node to top of stack
-        q.push(starting_vertex)
+        if starting_vertex not in visited:
+            print(starting_vertex) # visit the node
 
-        while q.size() > 0:
-            # remove from the top of stack
-            v = q.pop()
+            # add to visited set
+            visited.add(starting_vertex)     
 
-            if v not in visited:
-                print(v) # visit the node
-
-                # add to visited set
-                visited.add(v)     
-
-                # grab each neighbor of current vertex and add it to the top of stack 
-                for neighbor in self.get_neighbors(v):
-                    # calls function again on neighbors while travesing and keeps track of visted vertices
-                    self.dft_recursive(neighbor, visited)  
+            # grab each neighbor of current vertex and add it to the top of stack 
+            for neighbor in self.get_neighbors(starting_vertex):
+                # calls function again on neighbors while travesing and keeps track of visted vertices
+                self.dft_recursive(neighbor, visited)  
 
 
 
