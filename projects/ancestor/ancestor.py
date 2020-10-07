@@ -51,6 +51,3 @@ def earliest_ancestor(ancestors, starting_node):
     # add it to visited
     # push neighbors  to top of stack
     # repeat till stack is empty
-    # if length of dictionary - length of visited = 1 (I'm at the last unvisted node)
-        # return last node (this must be the furthest ancestor)
-    # if no ancestor return -1
