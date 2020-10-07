@@ -50,7 +50,7 @@ class Graph:
 
             # check if it exist in the visited set
             if v not in visited:
-                print('bft:', v) # visit the node
+                print(v) # visit the node
 
                 # add to visited set
                 visited.add(v)
@@ -75,7 +75,7 @@ class Graph:
             v = q.pop()
 
             if v not in visited:
-                print('dft:', v) # visit the node
+                print(v) # visit the node
 
                 # add to visited set
                 visited.add(v)     
@@ -93,29 +93,19 @@ class Graph:
 
         This should be done using recursion.
         """
-        q = Stack()
-        
-
         if visited is None:
             visited = set()
     
-        # Init - add starting node to top of stack
-        q.push(starting_vertex)
+        if starting_vertex not in visited:
+            print(starting_vertex) # visit the node
 
-        while q.size() > 0:
-            # remove from the top of stack
-            v = q.pop()
+            # add to visited set
+            visited.add(starting_vertex)     
 
-            if v not in visited:
-                print('dft_re:', v) # visit the node
-
-                # add to visited set
-                visited.add(v)     
-
-                # grab each neighbor of current vertex and add it to the top of stack 
-                for neighbor in self.get_neighbors(v):
-                    # calls function again on neighbors while travesing and keeps track of visted vertices
-                    self.dft_recursive(neighbor, visited)  
+            # grab each neighbor of current vertex and add it to the top of stack 
+            for neighbor in self.get_neighbors(starting_vertex):
+                # calls function again on neighbors while travesing and keeps track of visted vertices
+                self.dft_recursive(neighbor, visited)  
 
 
 
@@ -161,23 +151,35 @@ class Graph:
         depth-first order.
         """
         q = Stack()
+        # init path as array containing the starting vertex
         path = [starting_vertex]
         
+        # add the path to the stack
         q.push(path)        
         visited = set()
 
+        # While the queue is not empty...
         while q.size() > 0:
+            # remove from the top of the stack
             v = q.pop()
+            # store the last vertex from path that was just removed from the stack
             last_vertex = v[-1]
-
+            # if last vertex matches 
             if last_vertex == destination_vertex:
+                # return the path
                 return v 
+            # otherwise 
             else:
+                # add the  lasat vertex to visited
                 visited.add(last_vertex)
                 
+                # grab the neighbors, for each neighbor
                 for neighbor in self.get_neighbors(last_vertex):
+                    # copy path removed from stack
                     path = v[:]
+                    # add path to stack
                     q.push(path)
+                    # add the neighbor to the path, continue searching
                     path.append(neighbor)
 
     def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
@@ -195,6 +197,7 @@ class Graph:
         if path is None:
             path = [] 
         
+        # copy path append starting vertex
         path = path + [starting_vertex] 
         
         # add current vertex to visited and path
@@ -211,6 +214,7 @@ class Graph:
                     re_path = self.dfs_recursive(neighbor, destination_vertex, visited, path) 
                     if re_path:
                         return re_path
+            # did not find path
             return None
 
 
