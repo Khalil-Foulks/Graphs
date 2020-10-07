@@ -13,7 +13,9 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = set()
+        # add vertex to vertices as an empty set if it doesn't exist alread
+        if not self.vertices.get(vertex_id):
+            self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
@@ -33,27 +35,40 @@ class Graph:
         return self.vertices[vertex_id]
 
     def get_ancestor(self, starting_node):
-        if self.vertices.get(starting_node) == set():
+        # if child has no parent
+        if self.vertices[starting_node] == set():
             return -1
         
         s = Stack()
         visited = set()
-        # path = [starting_node]
 
+        # add starting node to top of stack
         s.push(starting_node)
+        # current pointer = starting node
         current = starting_node
 
+        # while stack isn't empty
         while s.size() > 0:
+            # remove from top of stack
             v = s.pop()
 
+            # if node removed from stack hasn't been visited
             if v not in visited:
-                if self.vertices.get(starting_node) == set():
+                # if size of stack isn't empty and there's no parent 
+                if s.size() > 0 and self.vertices[v] == set():
+                    # remove another node off of the stack 
                     v2 = s.pop()
+                    # if 2nd removed node is smaller than 1st 
                     if v2 < v:
+                        # use the smaller of the removed nodes; ignore the larger one
                         v = v2
                 # print(v)
+                # add removed node to visited
                 visited.add(v)  
+                # update current to removed node
                 current =  v   
             for neighbor in self.get_neighbors(v):
+                # push the neighbors to the top of stack
                 s.push(neighbor)
-        return current        
+        # return current node
+        return current

@@ -5,19 +5,22 @@ g = Graph()
 
 def earliest_ancestor(ancestors, starting_node):
 
+    # for each tuple in ancestors list
     for t in ancestors:
         parent = t[0]
         child = t[1]
+        # create a key for each node in dictionary, value is an empty set
         g.add_vertex(parent)
         g.add_vertex(child)
+        # connect child node to a parent node; parents get added to child's set
         g.add_edge(child, parent)
     print(g.vertices)
     return g.get_ancestor(starting_node)           
 
 
-test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
+# test_ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
 
-print(earliest_ancestor(test_ancestors, 3))
+# print(earliest_ancestor(test_ancestors, 3))
 
 
 
