@@ -1,4 +1,3 @@
-from util import Stack, Queue
 from graph import Graph
 
 g = Graph()
@@ -44,10 +43,16 @@ def earliest_ancestor(ancestors, starting_node):
 # DFT
     # create a empty stack
     # create empty visited set
+    # create current pointer
     # push start node to top of stack
     # while stack is > 0 
-    # remove from top of stack
-    # if node hasn't been visited
-    # add it to visited
+        # remove from top of stack
+        # if node hasn't been visited
+            # if stack isn't empty and there's no parent
+            # if there's more than one neighbor
+            # pop another node of the stack
+            # compare the two parent nodes
+                # traverse the smaller node
+            # add it to visited
     # push neighbors  to top of stack
-    # repeat till stack is empty
+    # return current (the furthest ancestor)

@@ -1,3 +1,7 @@
+import math
+import random
+from util import Stack, Queue 
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -42,11 +46,22 @@ class SocialGraph:
         self.last_id = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
-
-        # Add users
-
-        # Create friendships
+        for i in range(0, num_users):
+            self.add_user(f"User {i}")
+        possible_friendships = []
+        for user_id in self.users:
+            for friend_id in range(user_id + 1, self.last_id + 1):
+                possible_friendships.append((user_id, friend_id))
+        random.shuffle(possible_friendships)
+        for i in range(0, math.floor(num_users * avg_friendships / 2)):
+            friendship = possible_friendships[i]
+            self.add_friendship(friendship[0], friendship[1])
+    
+    def get_neighbors(self, vertex_id):
+        """
+        Get all neighbors (edges) of a vertex.
+        """
+        return self.friendships[vertex_id]
 
     def get_all_social_paths(self, user_id):
         """
@@ -59,6 +74,37 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        q = Queue()
+        path = []
+
+        # add list containing user_id to queue
+        q.enqueue([user_id])
+
+        while q.size() > 0:
+            # remove path from queue
+            path = q.dequeue()
+            # grab last item in path
+            last_vertex = path[-1]
+
+            if last_vertex not in visited:
+                # add last item a key and path as value in visited dict
+                visited[last_vertex] = path
+
+                # for each neighbor 
+                for neighbor in self.friendships[last_vertex]:
+                    # if neighbor isn't in visited
+                    if neighbor not in visited:
+                        # print(f'user {last_vertex} ->', f'path: {path}')
+                        # print(visited)
+
+                        # copy path
+                        new_path = path[:]
+                        # add neighbor to end of copied path
+                        new_path.append(neighbor)  
+                        # add new path to queue
+                        q.enqueue(new_path)
+
         return visited
 
 
